@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+import rospy
+import geometry_msgs.msg
+from balboa_core.msg import balboaMotorSpeeds
+from std_msgs.msg import String, UInt8
+
+def callback(data):#Executes whenever new data is received
+    try:
+        talker(data)
+    except rospy.ROSInterruptException:
+        pass
+
+    
+def listener():
+
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # name are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    rospy.init_node('robotController', anonymous=True)
+
+    rospy.Subscriber("/turtle1/cmd_vel", geometry_msgs.msg.Twist, callback)
+
+
+    # spin() simply keeps python from exiting until this node is stopped
+    rospy.spin()
+
+
+def talker(data):
+    #rospy.loginfo(data)
+    pub = rospy.Publisher('/motorSpeeds', balboaMotorSpeeds, queue_size=4) #Tells the topic and data type of the data being published
+    cmd = balboaMotorSpeeds()
+    rate = rospy.Rate(50)#High rate to increase responsiveness 
+    pub.publish(cmd)
+    rate.sleep()
+    if data.linear.x > 0:#Executes if front arrow is pressed
+        cmd.left = 20.0
+        cmd.right = 20.0
+    elif data.linear.x < 0:#Executes if back arrow is pressed
+        cmd.left = -20.0
+        cmd.right = -20.0
+    elif data.angular.z > 0:#Executes if left arrow is pressed
+        cmd.left = -10.0
+        cmd.right = 10.0
+    elif data.angular.z < 0:#executes if right arrow is pressed
+        cmd.left = 10.0
+        cmd.right = -10.0
+    else:
+        cmd.left = 0.0
+        cmd.right = 0.0
+
+    pub.publish(cmd)#Command recive rate is better when we publish multiple times
+    pub.publish(cmd)
+    pub.publish(cmd)
+    pub.publish(cmd)
+    pub.publish(cmd)
+    pub.publish(cmd)
+
+    cmd.left = 0.0#Sets speed to 0 for when buttons arent pressed
+    cmd.right = 0.0
+    pub.publish(cmd)
+    rate.sleep()
+    
+if __name__ == '__main__':
+    listener()
+    
+
+    
+   

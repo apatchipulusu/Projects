@@ -1,0 +1,23 @@
+<launch>
+
+	<remap from="/turtle1/cmd_vel" to="/turtle1/cmd_vel2"/>
+
+	<node pkg="turtlesim" name="teleop" type="turtle_teleop_key"/>
+
+	<node pkg="balboa_core" name="balboa_serial" type="balboa_serial.py"> 
+   	</node>
+
+	<node pkg="balboa_core" name="robotWhisperer" type="robotWhisperer.py"> 
+   	</node>
+
+	<node pkg="balboa_core" name="PIDController" type="PID.py">	
+   	</node>
+
+	<param name="P" type="double" value="0.03"/>
+	
+	<param name="D" type="double" value="0.1"/>
+
+	<param name="PDistance" type="double" value="2"/>
+
+	<param name="DDistance" type="double" value="0.25"/>
+</launch>

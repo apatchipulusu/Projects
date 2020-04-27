@@ -1,0 +1,16 @@
+<launch>
+	<!-- Start up the node to read data from the robot -->
+	<node pkg="balboa_core" name="balboa_serial" type="balboa_serial.py"> 
+   	</node>
+
+	<!-- Start up the node to interpret the reflectance sensor readings -->
+	<node pkg="balboa_core" name="lineDetector" type="lineDetector.py" output="screen">	
+   	</node>
+
+	<!-- Reflectance sensor detection thresholds -->
+	<param name="sensorLimit0" type="double" value="1000"/>
+	<param name="sensorLimit1" type="double" value="900"/>
+	<param name="sensorLimit2" type="double" value="800"/>
+	<param name="sensorLimit3" type="double" value="900"/>
+	<param name="sensorLimit4" type="double" value="1000"/>
+</launch>

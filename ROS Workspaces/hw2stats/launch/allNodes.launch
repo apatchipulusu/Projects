@@ -1,0 +1,20 @@
+<launch>
+	<!-- Start up the rawStats file with original name and topic -->
+	<node pkg="hw2stats" name="huskerRawStats" type="rawStats.py"> 
+   	</node>
+
+	<!-- Start up the offensiveStats file original name and topic -->
+	<node pkg="hw2stats" name="huskerOffensiveStats" type="offensiveStats.py"> 
+   	</node>
+
+	<!-- Start up the rawStats file with new name and remapped topic -->
+	<node pkg="hw2stats" name="opponentRawStats" type="rawStats.py"> 
+		<remap from="/plays/huskerkOffensivePlay" to="/plays/opponentOffensivePlay"/>
+   	</node>
+
+	<!-- Start up the offensiveStats file with new name and remapped topic -->
+	<node pkg="hw2stats" name="opponentOffensiveStats" type="offensiveStats.py"> 
+		<remap from="/huskerOffensiveStats" to="/opponentOffensiveStats"/>
+   	</node>
+
+</launch>

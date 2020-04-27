@@ -1,0 +1,10 @@
+<launch>
+	<!-- Start up the rocketShip.py file -->
+	<node pkg="hw2stats" name="rocketship" type="rocketShip.py"> 
+   	</node>
+
+	<!-- Start up the kalmanFilter.py -->
+	<node pkg="hw2stats" name="kalmanFilter" type="kalmanFilter.py"> 
+   	</node>
+
+</launch>

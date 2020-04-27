@@ -1,0 +1,19 @@
+<launch>
+	<!-- Start up the node to read data from the robot -->
+	<node pkg="balboa_core" name="balboa_serial" type="balboa_serial.py"> 
+   	</node>
+
+	<!-- Start up the node to publish movement commands to robot -->
+	<node pkg="balboa_core" name="robotWhisperer" type="robotWhisperer.py"> 
+   	</node>
+
+	<!-- Start up the node to command the robot to scan -->
+	<node pkg="balboa_core" name="laneKeepAssist" type="laneKeepAssist.py" output="screen">	
+   	</node>
+
+	<!-- PID values -->
+	<param name="P" type="double" value="0.03"/>
+	<param name="D" type="double" value="0.1"/>
+	<param name="PDistance" type="double" value="2"/>
+	<param name="DDistance" type="double" value="0.25"/>
+</launch>
